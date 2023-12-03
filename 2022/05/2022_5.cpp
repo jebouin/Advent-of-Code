@@ -27,32 +27,29 @@
 typedef long long ll;
 using namespace std;
 
-int readInt() {
-    char c;
-    bool start = false;
-    int ans = 0;
-	while(true) {
-		c = getchar();
-        if(c < '0' || c > '9') {
-            if(start) break;
-            else continue;
-        }
-        ans *= 10;
-		start = true;
-		ans += c - '0';
-	}
-    return ans;
-}
+const int N = 11;
+string a[N] = {"", "BGSC", "TMWHJNVG", "MQS", "BSLTWNM", "JZFTVGWP", "CTBGQHS", "TJPBW", "GDCZFTQM", "NSHBPF"};
 
 signed main() {
     freopen("input.txt", "r", stdin);
-    string s;
-    int ans = 0;
-    rep(i, 1, 1000) {
-        int a = readInt(), b = readInt(), c = readInt(), d = readInt();
-        int l = max(a, c), r = min(b, d);
-        ans += r - l == min(b - a, d - c);
+    rep(i, 1, 501) {
+        string s;
+        int k, x, y;
+        cin >> s >> k >> s >> x >> s >> y;
+        int kk = k;
+        string t;
+        while(kk--) {
+            char c = a[x].back();
+            a[x].pop_back();
+            t += c;
+        }
+        kk = k;
+        reverse(rng(t));
+        a[y] += t;
     }
-    cout << ans << endl;
+    rep(i, 1, 9) {
+        cout << a[i].back();
+    }
+    cout << endl;
     return 0;
 }
