@@ -28,24 +28,37 @@ typedef long long ll;
 using namespace std;
 
 const int N = 11;
-string a[N] = {"", "BGSC", "TMWHJNVG", "MQS", "BSLTWNM", "JZFTVGWP", "CTBGQHS", "TJPBW", "GDCZFTQM", "NSHBPF"};
+string a[N];
+int n = 9;
 
 signed main() {
     freopen("input.txt", "r", stdin);
-    rep(i, 1, 501) {
-        string s;
+    rep(j, 1, n) {
+        a[j] = string(8, ' ');
+    }
+    string line;
+    rep(i, 1, 8) {
+        getline(cin, line);
+        rep(j, 1, n) {
+            a[j][i - 1] = line[(j - 1) * 4 + 1];
+        }
+    }
+    rep(j, 1, n) {
+        reverse(rng(a[j]));
+        while(a[j].back() == ' ') {
+            a[j].pop_back();
+        }
+    }
+    getline(cin, line);
+    string w;
+    while(cin >> w) {
         int k, x, y;
-        cin >> s >> k >> s >> x >> s >> y;
-        int kk = k;
-        string t;
-        while(kk--) {
+        cin >> k >> w >> x >> w >> y;
+        rep(_, 1, k) {
             char c = a[x].back();
             a[x].pop_back();
-            t += c;
+            a[y] += c;
         }
-        kk = k;
-        reverse(rng(t));
-        a[y] += t;
     }
     rep(i, 1, 9) {
         cout << a[i].back();
