@@ -28,14 +28,10 @@
 typedef long long ll;
 using namespace std;
 
-const int N = 222;
-int a[N], p[N], b[N];
-int n = 207;
-
 signed main() {
     freopen("input.txt", "r", stdin);
     int ans = 0;
-    rep(i, 1, n) {
+    rep(i, 1, 207) {
         string line, w;
         getline(cin, line);
         stringstream ss(line);
