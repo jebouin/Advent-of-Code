@@ -33,17 +33,25 @@ struct Comp {
     int pos = 0;
     bool halted = false;
 
+    void load() {
+        int x;
+        while(cin >> x) {
+            getchar();
+            mem.pb(x);
+        }
+        mem.resize(1'000'000);
+    }
     int operator [] (int i) const {
-        return mem[i % sz(mem)];
+        return mem[i];
     }
     int& operator [] (int i) {
-        return mem[i % sz(mem)];
+        return mem[i];
     }
-    void pb(int x) {mem.pb(x);}
     int& getVal(int pos, int mode) {
         int& x = (*this)[pos];
         return mode == 0 ? (*this)[x] : x;
     }
+    void pb(int x) {mem.pb(x);}
     void input(int x) {
         in.push(x);
     }
@@ -93,13 +101,10 @@ struct Comp {
 signed main() {
     freopen("input.txt", "r", stdin);
     Comp comp;    
-    int x;
-    while(cin >> x) {
-        getchar();
-        comp.pb(x);
-    }
+    comp.load();
     comp.input(1);
     comp.run();
+    int x;
     while(comp.output(x)) {
         if(x != 0) {
             cout << x << endl;

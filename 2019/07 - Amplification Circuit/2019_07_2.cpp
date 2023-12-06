@@ -103,8 +103,11 @@ struct Comp {
         }
     }
 
-    void run() {
+    void run(bool stopOnOutput) {
         while(!halted) {
+            if(sz(out) > 0 && stopOnOutput) {
+                break;
+            }
             step();
         }
     }
@@ -112,15 +115,28 @@ struct Comp {
 
 signed main() {
     freopen("input.txt", "r", stdin);
-    Comp comp;    
-    comp.load();
-    comp.input(5);
-    comp.run();
-    int x;
-    while(comp.output(x)) {
-        if(x != 0) {
-            cout << x << endl;
-        }
+    Comp base;
+    base.load();
+    vector<int> perm;
+    rep(i, 5, 9) {
+        perm.pb(i);
     }
+    int ans = 0;
+    do {
+        vector<Comp> comps(5, base);
+        rep(i, 0, 4) {
+            comps[i].input(perm[i]);
+        }
+        int power = 0;
+        do {
+            rep(i, 0, 4) {
+                comps[i].input(power);
+                comps[i].run(true);
+                comps[i].output(power);
+            }
+        } while(!comps[4].halted);
+        ans = max(ans, power);
+    } while(next_permutation(rng(perm)));
+    cout << ans << endl;
     return 0;
 }

@@ -32,11 +32,19 @@ struct Comp {
     int pos = 0;
     bool halted = false;
 
+    void load() {
+        int x;
+        while(cin >> x) {
+            getchar();
+            mem.pb(x);
+        }
+        mem.resize(1'000'000);
+    }
     int operator [] (int i) const {
-        return mem[i % sz(mem)];
+        return mem[i];
     }
     int& operator [] (int i) {
-        return mem[i % sz(mem)];
+        return mem[i];
     }
     int& getVal(int pos) {
         return (*this)[pos];
@@ -71,11 +79,7 @@ struct Comp {
 signed main() {
     freopen("input.txt", "r", stdin);
     Comp base;
-    int x;
-    while(cin >> x) {
-        getchar();
-        base.pb(x);
-    }
+    base.load();
     rep(x, 0, 99) {
         rep(y, 0, 99) {
             Comp comp = base;

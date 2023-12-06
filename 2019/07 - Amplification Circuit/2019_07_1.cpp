@@ -29,6 +29,7 @@ using namespace std;
 
 struct Comp {
     vector<int> mem;
+    queue<int> in, out;
     int pos = 0;
     bool halted = false;
 
@@ -46,20 +47,53 @@ struct Comp {
     int& operator [] (int i) {
         return mem[i];
     }
-    int& getVal(int pos) {
-        return (*this)[pos];
+    int& getVal(int pos, int mode) {
+        int& x = (*this)[pos];
+        return mode == 0 ? (*this)[x] : x;
     }
     void pb(int x) {mem.pb(x);}
+    void input(int x) {
+        in.push(x);
+    }
+    bool output(int &x) {
+        if(out.empty()) {
+            return false;
+        }
+        x = out.front();
+        out.pop();
+        return true;
+    }
     void step() {
-        int op = (*this)[pos];
-        int& x = getVal(getVal(pos + 1));
-        int& y = getVal(getVal(pos + 2));
-        int& z = getVal(getVal(pos + 3));
+        int val = (*this)[pos];
+        int op = val % 100;
+        int m1 = val / 100 % 10, m2 = val / 1000 % 10, m3 = val / 10000 % 10;
+        int& x = getVal(pos + 1, m1);
+        int& y = getVal(pos + 2, m2);
+        int& z = getVal(pos + 3, m3);
         if(op == 1) {
             z = x + y;
             pos += 4;
         } else if(op == 2) {
             z = x * y;
+            pos += 4;
+        } else if(op == 3) {
+            x = in.front();
+            in.pop();
+            pos += 2;
+        } else if(op == 4) {
+            out.push(x);
+            pos += 2;
+        } else if(op == 5) {
+            if(x) pos = y;
+            else pos += 3;
+        } else if(op == 6) {
+            if(!x) pos = y;
+            else pos += 3;
+        } else if(op == 7) {
+            z = x < y;
+            pos += 4;
+        } else if(op == 8) {
+            z = x == y;
             pos += 4;
         } else if(op == 99) {
             halted = true;
@@ -78,11 +112,24 @@ struct Comp {
 
 signed main() {
     freopen("input.txt", "r", stdin);
-    Comp comp;
-    comp.load();
-    comp[1] = 12;
-    comp[2] = 2;
-    comp.run();
-    cout << comp[0] << endl;
+    Comp base;
+    base.load();
+    vector<int> perm;
+    rep(i, 0, 4) {
+        perm.pb(i);
+    }
+    int ans = 0;
+    do {
+        int power = 0;
+        rall(phase, perm) {
+            Comp comp = base;
+            comp.input(phase);
+            comp.input(power);
+            comp.run();
+            comp.output(power);
+        }
+        ans = max(ans, power);
+    } while(next_permutation(rng(perm)));
+    cout << ans << endl;
     return 0;
 }
