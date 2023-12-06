@@ -28,20 +28,42 @@
 typedef long long ll;
 using namespace std;
 
+const int N = 111;
+int pos[N][3], vel[N][3];
+set<vector<pair<int, int> > > st;
+int n = 4;
+
 signed main() {
     freopen("input.txt", "r", stdin);
-    string s;
-    int ans = 0;
-    while(cin >> s) {
-        int n = sz(s);
-        vector<int> digits;
-        rep(i, 0, n - 1) {
-            if(isdigit(s[i])) {
-                digits.pb(s[i] - '0');
+    rep(i, 1, n) {
+        rep(j, 1, 3) getchar();
+        cin >> pos[i][0];
+        rep(j, 1, 4) getchar();
+        cin >> pos[i][1];
+        rep(j, 1, 4) getchar();
+        cin >> pos[i][2];
+        rep(j, 1, 2) getchar();
+    }
+    rep(step, 1, 1000) {
+        rep(c, 0, 2) {
+            rep(i, 1, n) {
+                rep(j, 1, n) {
+                    vel[i][c] += (pos[j][c] > pos[i][c]) - (pos[j][c] < pos[i][c]);
+                }
+            }
+            rep(i, 1, n) {
+                pos[i][c] += vel[i][c];
             }
         }
-        int add = digits[0] * 10 + digits[sz(digits) - 1];
-        ans += add;
+    }
+    int ans = 0;
+    rep(i, 1, n) {
+        int pot = 0, kin = 0;
+        rep(j, 0, 2) {
+            pot += abs(pos[i][j]);
+            kin += abs(vel[i][j]);
+        }
+        ans += pot * kin;
     }
     cout << ans << endl;
     return 0;

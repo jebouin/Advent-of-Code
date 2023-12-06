@@ -28,28 +28,47 @@
 typedef long long ll;
 using namespace std;
 
-const string words[] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+const int N = 111;
+int pos[N][3], vel[N][3];
+set<vector<pair<int, int> > > st;
+int n = 4;
 
 signed main() {
     freopen("input.txt", "r", stdin);
-    string s;
+    rep(i, 1, n) {
+        rep(j, 1, 3) getchar();
+        cin >> pos[i][0];
+        rep(j, 1, 4) getchar();
+        cin >> pos[i][1];
+        rep(j, 1, 4) getchar();
+        cin >> pos[i][2];
+        rep(j, 1, 2) getchar();
+    }
     int ans = 0;
-    while(cin >> s) {
-        int n = sz(s);
-        vector<int> digits;
-        rep(i, 0, n - 1) {
-            if(isdigit(s[i])) {
-                digits.pb(s[i] - '0');
+    rep(c, 0, 2) {
+        st.clear();
+        for(int step = 1;; step++) {
+            vector<pair<int, int> > state;
+            rep(i, 1, n) {
+                state.pb(make_pair(pos[i][c], vel[i][c]));
+            }
+            if(st.find(state) != st.end()) {
+                step--;
+                if(ans) ans = step / __gcd(step, ans) * ans;
+                else ans = step;
+                break;
             } else {
-                rep(d, 0, 9) {
-                    if(s.substr(i, sz(words[d])) == words[d]) {
-                        digits.pb(d);
-                    }
+                st.insert(state);
+            }
+            rep(i, 1, n) {
+                rep(j, 1, n) {
+                    vel[i][c] += (pos[j][c] > pos[i][c]) - (pos[j][c] < pos[i][c]);
                 }
             }
+            rep(i, 1, n) {
+                pos[i][c] += vel[i][c];
+            }
         }
-        int add = digits[0] * 10 + digits[sz(digits) - 1];
-        ans += add;
     }
     cout << ans << endl;
     return 0;
