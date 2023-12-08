@@ -10,4 +10,4 @@ My C++ solutions to Advent of Code problems.
 | 2020 |  0/50 |
 | 2021 |  0/50 |
 | 2022 | 16/50 |
-| 2023 | 14/50 |
+| 2023 | 16/50 |
