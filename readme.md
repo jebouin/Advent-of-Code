@@ -2,7 +2,7 @@ My C++ solutions to Advent of Code problems.
 
 | Year  |  Stars  |
 |-------|--------:|
-| 2015  |  20/50  |
+| 2015  |  36/50  |
 | 2016  |  16/50  |
 | 2017  |  10/50  |
 | 2018  |  46/50  |
@@ -11,4 +11,4 @@ My C++ solutions to Advent of Code problems.
 | 2021  |  20/50  |
 | 2022  |  16/50  |
 | 2023  |  26/50  |
-| total | 188/450 |
+| total | 204/450 |
