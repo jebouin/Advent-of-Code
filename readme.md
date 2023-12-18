@@ -10,5 +10,5 @@ My C++ solutions to Advent of Code problems.
 | 2020  |  26/50  |
 | 2021  |  20/50  |
 | 2022  |  18/50  |
-| 2023  |  34/50  |
-| Total | 272/450 |
+| 2023  |  36/50  |
+| Total | 274/450 |
