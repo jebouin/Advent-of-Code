@@ -127,8 +127,6 @@ signed main() {
     rep(i, 1, n) {
         int add = sim(i);
         ans += add;
-        cout << i << " " << add << endl;
-        //Brick& b = all[i];
     }
     cout << ans << endl;
     return 0;

@@ -93,10 +93,10 @@ signed main() {
     rep(i, 1, n) {
         Brick& b = all[i];
         b.zMin -= 1'000'000;
-        b.zMin -= 1'000'000;
-        ans += step(false, i);
+        b.zMax -= 1'000'000;
+        ans += step(false, i) == 0;
         b.zMin += 1'000'000;
-        b.zMin += 1'000'000;
+        b.zMax += 1'000'000;
     }
     cout << ans << endl;
     return 0;

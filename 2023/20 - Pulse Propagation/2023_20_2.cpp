@@ -101,10 +101,6 @@ void Mod::send(bool b) {
     }
 }
 
-int lcm(int x, int y) {
-    return x / __gcd(x, y) * y;
-}
-
 signed main() {
     freopen("input.txt", "r", stdin);
     Mod mod;
@@ -119,11 +115,8 @@ signed main() {
             mm.prev[m.name] = false;
         }
     }
-    /*int ans = lcm(lcm(3761, 3767), lcm(4001, 4091));
-    cout << ans << endl;
-    return 0;*/
     set<pair<string, int> > st;
-    int ans = 0;
+    int cnt = 0;
     rep(i, 1, 20'000) {
         bool ch = false;
         rall(p, mp) {
@@ -136,18 +129,24 @@ signed main() {
                 mp[s].update();
                 rall(p, mp["gf"].prev) {
                     if(p.se) {
-                        st.insert({p.fi, ans});
+                        st.insert({p.fi, cnt});
                     }
                 }
             }
         }
         if(!ch) {
             mp["broadcaster"].q.push({"button", false});
-            ans++;
+            cnt++;
         }
     }
+    set<string> seen;
+    int ans = 1;
     rall(p, st) {
-        cout << p.fi << " " << p.se << endl;
+        if(seen.find(p.fi) != seen.end()) continue;
+        seen.insert(p.fi);
+        int g = __gcd(ans, p.se);
+        ans = ans / g * p.se;
     }
+    cout << ans << endl;
     return 0;
 }
